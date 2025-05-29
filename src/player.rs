@@ -21,6 +21,7 @@ fn spawn_player(
         Collider::rectangle(50.0, 50.0),
         Transform::from_scale(Vec3::splat(0.3)),
         LinearVelocity(Vec2::ZERO),
+        TransformInterpolation,
         Player,
     ));
     commands.spawn(Camera2d);
@@ -34,7 +35,7 @@ fn move_player(
         return;
     };
 
-    const SPEED: f32 = 10.0;
+    const SPEED: f32 = 210.0;
     let mut input = Vec2::ZERO;
 
     if keyboard_input.pressed(KeyCode::KeyW) {
@@ -53,7 +54,7 @@ fn move_player(
         velocity.0 = Vec2::ZERO;
     }
 
-    velocity.0 += input * SPEED;
+    velocity.0 = input.normalize_or_zero() * SPEED;
 }
 
 impl Plugin for PlayerPlugin {
