@@ -1,6 +1,7 @@
 use avian2d::PhysicsPlugins;
 use bevy::prelude::*;
 
+mod camera;
 mod player;
 
 fn main() {
@@ -8,6 +9,7 @@ fn main() {
         .add_plugins((
             DefaultPlugins,
             PhysicsPlugins::default(),
+            camera::CameraPlugin,
             player::PlayerPlugin,
         ))
         .run();
