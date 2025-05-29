@@ -1,6 +1,8 @@
 use avian2d::prelude::*;
 use bevy::prelude::*;
 
+use crate::camera::CameraTarget;
+
 pub struct PlayerPlugin;
 
 #[derive(Component)]
@@ -22,6 +24,7 @@ fn spawn_player(
         Transform::from_scale(Vec3::splat(0.3)),
         LinearVelocity(Vec2::ZERO),
         TransformInterpolation,
+        CameraTarget,
         Player,
     ));
     commands.spawn(Camera2d);

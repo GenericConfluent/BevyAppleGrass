@@ -13,7 +13,7 @@ impl Plugin for CameraPlugin {
 
 fn follow_target(
     target_query: Query<&Transform, With<CameraTarget>>,
-    mut camera_query: Query<&mut Transform, With<Camera2d>>,
+    mut camera_query: Query<&mut Transform, (With<Camera2d>, Without<CameraTarget>)>,
 ) {
     let Ok(target) = target_query.single() else {
         return;
