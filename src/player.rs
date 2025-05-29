@@ -20,21 +20,22 @@ fn spawn_player(
         RigidBody::Kinematic,
         Collider::rectangle(50.0, 50.0),
         Transform::from_scale(Vec3::splat(0.3)),
+        LinearVelocity(Vec2::ZERO),
         Player,
     ));
     commands.spawn(Camera2d);
 }
 
 fn move_player(
-    mut player_query: Query<&mut Transform, With<Player>>,
+    mut player_query: Query<&mut LinearVelocity, With<Player>>,
     keyboard_input: Res<ButtonInput<KeyCode>>,
 ) {
-    let Ok(mut transform) = player_query.single_mut() else {
+    let Ok(mut velocity) = player_query.single_mut() else {
         return;
     };
 
-    const SPEED: f32 = 210.0;
-    let mut input = Vec3::ZERO;
+    const SPEED: f32 = 10.0;
+    let mut input = Vec2::ZERO;
 
     if keyboard_input.pressed(KeyCode::KeyW) {
         input.y += 1.0;
@@ -48,8 +49,11 @@ fn move_player(
     if keyboard_input.pressed(KeyCode::KeyD) {
         input.x += 1.0;
     }
+    if input == Vec2::ZERO {
+        velocity.0 = Vec2::ZERO;
+    }
 
-    transform.translation += input * SPEED;
+    velocity.0 += input * SPEED;
 }
 
 impl Plugin for PlayerPlugin {
