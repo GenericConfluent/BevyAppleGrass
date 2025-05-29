@@ -3,6 +3,9 @@ name = "BevyAppleGrass"
 version = "0.1.0"
 edition = "2024"
 
+[dependencies]
+avian2d = "0.3.0"
+
 [dependencies.bevy]
 version = "0.16.0"
 default-features = false
