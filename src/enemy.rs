@@ -1,7 +1,7 @@
 use avian2d::prelude::*;
 use bevy::prelude::*;
 
-use crate::camera::CameraTarget;
+use crate::player::Player;
 
 pub struct EnemyPlugin;
 
@@ -29,8 +29,8 @@ fn spawn_enemy(
 }
 
 fn follow_player(
-    player_query: Query<&Transform, With<Player>>, //probably not the best way to do it if the camera ever targets anything else
-    mut enemy_query: Query<&mut Transform, (With<Enemy>, Without<CameraTarget>)>,
+    player_query: Query<&Transform, With<Player>>,
+    mut enemy_query: Query<&mut Transform, (With<Enemy>, Without<Player>)>,
 ) {
     if let Ok(player_transform) = player_query.single() {
         const SPEED: f32 = 1.0; //for some reason the way this calculation is done provides a much lower magnitude compared to player.rs
