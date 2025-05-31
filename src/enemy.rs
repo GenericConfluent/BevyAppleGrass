@@ -29,8 +29,8 @@ fn spawn_enemy(
 }
 
 fn follow_player(
-    player_query: Query<&Transform, With<CameraTarget>>, //probably not the best way to do it if the camera ever targets anything else
-    mut enemy_query: Query<&mut Transform, (With<Enemy>, Without<CameraTarget>)>
+    player_query: Query<&Transform, With<Player>>, //probably not the best way to do it if the camera ever targets anything else
+    mut enemy_query: Query<&mut Transform, (With<Enemy>, Without<CameraTarget>)>,
 ) {
     if let Ok(player_transform) = player_query.single() {
         const SPEED: f32 = 1.0; //for some reason the way this calculation is done provides a much lower magnitude compared to player.rs
@@ -41,7 +41,6 @@ fn follow_player(
             enemy_transform.translation += movement.extend(0.0);
         }
     }
-
 }
 
 impl Plugin for EnemyPlugin {
@@ -50,3 +49,4 @@ impl Plugin for EnemyPlugin {
         app.add_systems(FixedUpdate, follow_player);
     }
 }
+
